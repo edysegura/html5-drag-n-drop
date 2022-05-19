@@ -10,7 +10,11 @@ body {
 
 .draggable {
   padding: 1rem;
-  background-color: #FFF;
+  background-color: #fff;
   border: 1px solid #000;
   cursor: move;
+}
+
+.draggable.dragging {
+  opacity: 0.5;
 }
