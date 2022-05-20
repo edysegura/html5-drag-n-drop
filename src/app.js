@@ -9,3 +9,11 @@ draggables.forEach((draggable) => {
     draggable.classList.remove('dragging')
   })
 })
+
+dropZones.forEach((dropZone) => {
+  dropZone.addEventListener('dragover', (event) => {
+    event.preventDefault()
+    const draggable = document.querySelector('.dragging')
+    dropZone.appendChild(draggable)
+  })
+})
