@@ -1,5 +1,5 @@
-const draggables = document.querySelectorAll('.draggable')
-const dropZones = document.querySelectorAll('.dropzone')
+const draggables = document.querySelectorAll('[draggable=true]')
+const dropZone = document.querySelector('.dropzone')
 
 draggables.forEach((draggable) => {
   draggable.addEventListener('dragstart', () => {
@@ -10,22 +10,20 @@ draggables.forEach((draggable) => {
   })
 })
 
-dropZones.forEach((dropZone) => {
-  dropZone.addEventListener('dragover', (event) => {
-    event.preventDefault()
-    const afterElement = getDragAfterElement(dropZone, event.clientY)
-    const draggable = document.querySelector('.dragging')
-    if (!afterElement) {
-      dropZone.appendChild(draggable)
-    } else {
-      dropZone.insertBefore(draggable, afterElement)
-    }
-  })
+dropZone.addEventListener('dragover', (event) => {
+  event.preventDefault()
+  const afterElement = getDragAfterElement(dropZone, event.clientY)
+  const draggable = document.querySelector('.dragging')
+  if (!afterElement) {
+    dropZone.appendChild(draggable)
+  } else {
+    dropZone.insertBefore(draggable, afterElement)
+  }
 })
 
 function getDragAfterElement(container, mousePositionY) {
   const draggableElements = [
-    ...container.querySelectorAll('.draggable:not(.dragging)'),
+    ...container.querySelectorAll('[draggable=true]:not(.dragging)'),
   ]
 
   return draggableElements.reduce(
@@ -41,3 +39,13 @@ function getDragAfterElement(container, mousePositionY) {
     { offset: Number.NEGATIVE_INFINITY }
   ).element
 }
+
+dropZone.addEventListener('dragend', () => {
+  const draggables = [...document.querySelectorAll('[draggable=true]')]
+  const pre = document.querySelector('pre')
+  const dataStructure = draggables.map((element, index) => ({
+    order: index,
+    name: element.textContent,
+  }))
+  pre.textContent = JSON.stringify(dataStructure, null, 2)
+})
