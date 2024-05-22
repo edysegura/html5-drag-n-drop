@@ -4,7 +4,6 @@ const container = document.querySelector('[data-sortable]')
 const sortable = new Sortable(container, {
   draggable: 'li',
   mirror: {
-    // appendTo: container,
     constrainDimensions: true,
   },
 })
