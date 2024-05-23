@@ -20,4 +20,19 @@ sortable.on('sortable:sorted', () => {
 sortable.on('sortable:stop', ({ data }) => {
   console.log('sortable:stop')
   console.log(data)
+  // this is a workaround to update the order after the DOM has been updated
+  // and avoid duplicated items in the data structure
+  setTimeout(() => {
+    updateOrder(container)
+  })
 })
+
+function updateOrder(container) {
+  const items = [...container.querySelectorAll('li')]
+  const pre = document.querySelector('pre')
+  const dataStructure = items.map((element, index) => ({
+    order: index,
+    name: element.textContent,
+  }))
+  pre.textContent = JSON.stringify(dataStructure, null, 2)
+}
