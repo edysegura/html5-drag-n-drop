@@ -17,9 +17,9 @@ sortable.on('sortable:sorted', () => {
   console.log('sortable:sorted')
 })
 
-sortable.on('sortable:stop', ({ data }) => {
+sortable.on('sortable:stop', (sortableEvent) => {
   console.log('sortable:stop')
-  console.log(data)
+  console.log(sortableEvent)
   // this is a workaround to update the order after the DOM has been updated
   // and avoid duplicated items in the data structure
   setTimeout(() => {
